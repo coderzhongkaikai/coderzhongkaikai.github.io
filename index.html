@@ -1,0 +1,23 @@
+<div>我是 iframe 内嵌页面</div>
+<div id="b">主页面发过来的信息会显示在这里</div>
+
+<script>
+var onmessage = function (event) {  
+  var data = event.data;//消息  
+  var origin = event.origin;//消息来源地址  
+  var source = event.source;//源 Window 对象  
+  if(origin=="http://localhost/"){  
+	document.getElementById("b").innerHTML = data;
+	
+	//发消息 
+    source.postMessage('我收到信息啦！', origin);  
+  }  
+};  
+
+if (typeof window.addEventListener != 'undefined') {  
+  window.addEventListener('message', onmessage, false);  
+} else if (typeof window.attachEvent != 'undefined') {  
+  //for ie  
+  window.attachEvent('onmessage', onmessage);  
+}  
+</script>
